@@ -49,8 +49,14 @@ function init() {
  Returns a Promise that resolves with the meal object
  */
 function fetchRandomMeal() {
-    // Fill in
-}
+    const url="https://www.themealdb.com/api/json/v1/1/random.php";
+    return fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Data:", data);
+      return data.meals[0];
+    }
+  )}
 
 /*
 Display Meal Data in the DOM
@@ -59,7 +65,7 @@ Receives a meal object with fields like:
   strIngredientX, strMeasureX, etc.
 */
 function displayMealData(meal) {
-    // Fill in
+    const strMeal=[""]
 }
 
 /*
