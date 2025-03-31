@@ -125,14 +125,40 @@ Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
 function fetchRandomCocktail() {
-    // Fill in
+  return fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+  .then((response) => response.json())
+  .then((data) => data.drinks[0]);
 }
 
 /*
 Display Cocktail Data in the DOM
 */
-function displayCocktailData(cocktail) {
-    // Fill in
+function displayCocktailData(cocktail) { 
+
+  const cocktailContainer = document.getElementById("cocktail-container");
+
+  const cocktailName = cocktail.strDrink;
+  const cocktailThumb = cocktail.strDrinkThumb;
+  const cocktailInstructions = cocktail.strInstructions;
+
+  let ingredientsList = "";
+  for (let i = 1; i <= 15; i++) {
+    const ingredient = cocktail["strIngredient" + i];
+    const measure = cocktail["strMeasure" + i];
+    if (ingredient && ingredient.trim() !== "") {
+      ingredientsList += `<li>${measure || ""} ${ingredient}</li>`;
+    }
+    
+}  
+
+cocktailContainer.innerHTML = `
+<h2>${cocktailName}</h2>
+<img src="${cocktailThumb}" alt="${cocktailName}" width="300">
+<h3>Ingredients:</h3>
+<ul>${ingredientsList}</ul>
+<h3>Instructions:</h3>
+<p>${cocktailInstructions}</p>
+`;
 }
 
 /*
