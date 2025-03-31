@@ -111,7 +111,13 @@ function fetchCocktailByDrinkIngredient(drinkIngredient) {
   const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + encodeURIComponent(drinkIngredient);
   return fetch(url)
   .then ((response) => response.json())
-  .then 
+  .then ((data) => {
+    if (data.drinks) {
+      return data.drinks[0];
+    } else {
+      return fetchRandomCocktail().then((randomDrink) => randomDrink);
+    }
+  })
 }
 
 /*
