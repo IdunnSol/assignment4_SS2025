@@ -65,18 +65,32 @@ Receives a meal object with fields like:
   strIngredientX, strMeasureX, etc.
 */
 function displayMealData(meal) {
-    const mealContainer=document.getElementById("meal-container");
+  const mealContainer=document.getElementById("meal-container");
 
-    const mealName=meal.strMeal;
-    const mealThumb=meal.strMealThumb;
-    const mealInstructions=meal.strInstructions;
-    const mealCategory=meal.strCategory;
+  const mealName=meal.strMeal;
+  const mealThumb=meal.strMealThumb;
+  const mealInstructions=meal.strInstructions;
+  const mealCategory=meal.strCategory;
 
-    const ingredients=[];
-    for (let i=1; i<=20; i++) {
-      const ingredient=meal['strIngredients'];
-      const measure=meal['strMeasure'];
+  const ingredients=[];
+  for (let i=1; i<=20; i++) {
+    const ingredient=meal[`strIngredients${i}`];
+    const measure=meal[`strMeasure${i}`];
+    if (ingredient && ingredient.trim() !== "") {
+      ingredients.push(`${measure ? measure : ""} ${ingredient}`);
     }
+  }
+  mealContainer.innerHTML = `
+    <h2>${mealName}</h2>
+    <img src="${mealThumb}" alt="${mealName}" width="300">
+    <p><strong>Category:</strong> ${mealCategory}</p>
+    <h3>Ingredients:</h3>
+    <ul>
+      ${ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+    </ul>
+    <h3>Instructions:</h3>
+    <p>${mealInstructions}</p>
+  `;
 }
 
 /*
